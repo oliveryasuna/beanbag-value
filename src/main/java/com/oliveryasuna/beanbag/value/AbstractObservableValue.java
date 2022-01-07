@@ -88,14 +88,6 @@ public abstract class AbstractObservableValue<T, SUB extends AbstractObservableV
     valueSetReadOnlyFailedListeners.fire().valueSetReadOnlyFailed(new ValueSetReadOnlyFailedEvent<>(candidateValue, value, (SUB)this));
   }
 
-  // Coping methods
-  //--------------------------------------------------
-
-  @Override
-  protected void copy(final T source) {
-    setValue(source);
-  }
-
   // Getters/setters
   //--------------------------------------------------
 
