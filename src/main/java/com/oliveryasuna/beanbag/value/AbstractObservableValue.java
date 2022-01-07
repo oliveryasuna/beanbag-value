@@ -23,6 +23,7 @@ import com.oliveryasuna.beanbag.value.event.ValueChangedEvent;
 import com.oliveryasuna.beanbag.value.event.ValueSetReadOnlyFailedEvent;
 import com.oliveryasuna.beanbag.value.listener.ValueChangedListener;
 import com.oliveryasuna.beanbag.value.listener.ValueSetReadOnlyFailedListener;
+import com.oliveryasuna.commons.language.pattern.registry.Registration;
 import org.apache.commons.lang3.event.EventListenerSupport;
 
 public abstract class AbstractObservableValue<T, SUB extends AbstractObservableValue<T, SUB>> extends ObservableBean<T, SUB> {
@@ -56,8 +57,10 @@ public abstract class AbstractObservableValue<T, SUB extends AbstractObservableV
   // Listener registration methods
   //--------------------------------------------------
 
-  public void addValueChangedListener(final ValueChangedListener<T, SUB> listener) {
+  public Registration addValueChangedListener(final ValueChangedListener<T, SUB> listener) {
     valueChangedListeners.addListener(listener);
+
+    return (() -> valueChangedListeners.removeListener(listener));
   }
 
   public void removeValueChangedListener(final ValueChangedListener<T, SUB> listener) {
