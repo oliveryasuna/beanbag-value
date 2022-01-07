@@ -18,10 +18,9 @@
 
 package com.oliveryasuna.beanbag.value.listener;
 
+import com.oliveryasuna.beanbag.listener.BeanListener;
 import com.oliveryasuna.beanbag.value.AbstractObservableValue;
 
-import java.util.EventListener;
-
-public interface ValueListener<T, SRC extends AbstractObservableValue<T, SRC>> extends EventListener {
+public interface ValueListener<T, SRC extends AbstractObservableValue<T, SRC>> extends BeanListener<T, SRC> {
 
 }
