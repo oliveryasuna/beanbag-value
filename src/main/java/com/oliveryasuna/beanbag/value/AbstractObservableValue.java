@@ -60,15 +60,17 @@ public abstract class AbstractObservableValue<T, SUB extends AbstractObservableV
   public Registration addValueChangedListener(final ValueChangedListener<T, SUB> listener) {
     valueChangedListeners.addListener(listener);
 
-    return (() -> valueChangedListeners.removeListener(listener));
+    return (() -> removeValueChangedListener(listener));
   }
 
   public void removeValueChangedListener(final ValueChangedListener<T, SUB> listener) {
     valueChangedListeners.removeListener(listener);
   }
 
-  public void addValueSetReadOnlyFailedListener(final ValueSetReadOnlyFailedListener<T, SUB> listener) {
+  public Registration addValueSetReadOnlyFailedListener(final ValueSetReadOnlyFailedListener<T, SUB> listener) {
     valueSetReadOnlyFailedListeners.addListener(listener);
+
+    return (() -> removeValueSetReadOnlyFailedListener(listener));
   }
 
   public void removeValueSetReadOnlyFailedListener(final ValueSetReadOnlyFailedListener<T, SUB> listener) {
@@ -84,6 +86,14 @@ public abstract class AbstractObservableValue<T, SUB extends AbstractObservableV
 
   protected void fireValueSetReadOnlyFailedEvent(final T candidateValue, final T value) {
     valueSetReadOnlyFailedListeners.fire().valueSetReadOnlyFailed(new ValueSetReadOnlyFailedEvent<>(candidateValue, value, (SUB)this));
+  }
+
+  // Coping methods
+  //--------------------------------------------------
+
+  @Override
+  protected void copy(final T source) {
+    setValue(source);
   }
 
   // Getters/setters
